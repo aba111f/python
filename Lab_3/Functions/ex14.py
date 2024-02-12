@@ -1,3 +1,2 @@
-file = open('func.py')
-
-print(file.read())
+import ex6
+print(ex6.reversed_sentence("bim bam "))

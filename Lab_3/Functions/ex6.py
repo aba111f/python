@@ -5,4 +5,4 @@ def reversed_sentence(s):
     return reversed_words
 
 
-print(reversed_sentence("We are ready"))
+#print(reversed_sentence("We are ready"))
