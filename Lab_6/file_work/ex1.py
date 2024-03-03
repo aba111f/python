@@ -1,4 +1,12 @@
 import os
-path = 'C:\Users\karat\Рабочий стол\pp2\Lab_6\file_work\some_folder'
-result = os.listdir(path)
-print(result)
+path = input()
+directories = []
+for folder in os.listdir(path):
+    if os.path.isdir(os.path.join(path,folder)):
+        directories.append(folder)
+print(directories)
+files = []
+for file in os.listdir(path):
+    if os.path.isfile(os.path.join(path,file)):
+        files.append(file)
+print(files)
