@@ -1,5 +1,5 @@
 import json
-file = open('Lab_4/myjson/task.txt')
+file = open('Lab_4/myjson/task.json')
 
 j_son = file.read()
 
@@ -12,7 +12,5 @@ print("Interface Status")
 print("================================================================================")
 print("DN                                                 Description           Speed    MTU")
 print("-------------------------------------------------- --------------------  ------  ------")
-print(j_son['imdata'][0]['l1PhysIf']['attributes']['dn'], '                            ',j_son['imdata'][0]['l1PhysIf']['attributes']['speed'],' ', j_son['imdata'][0]['l1PhysIf']['attributes']['mtu'])                                                                      
-print(j_son['imdata'][1]['l1PhysIf']['attributes']['dn'], '                            ',j_son['imdata'][1]['l1PhysIf']['attributes']['speed'],' ', j_son['imdata'][1]['l1PhysIf']['attributes']['mtu'])                                                                      
-print(j_son['imdata'][2]['l1PhysIf']['attributes']['dn'], '                            ',j_son['imdata'][2]['l1PhysIf']['attributes']['speed'],' ', j_son['imdata'][2]['l1PhysIf']['attributes']['mtu'])                                                                      
-print(j_son['imdata'][3]['l1PhysIf']['attributes']['dn'], '                            ',j_son['imdata'][3]['l1PhysIf']['attributes']['speed'],' ', j_son['imdata'][3]['l1PhysIf']['attributes']['mtu'])                                                                      
+for i in range(0, len(j_son['imdata'])):
+    print(j_son['imdata'][i]['l1PhysIf']['attributes']['dn'], '                            ',j_son['imdata'][i]['l1PhysIf']['attributes']['speed'],' ', j_son['imdata'][i]['l1PhysIf']['attributes']['mtu'])                                                                      
