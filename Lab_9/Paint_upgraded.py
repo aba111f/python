@@ -46,6 +46,44 @@ def calc_circle(x1, x2, y1, y2):
     
     return (center_x, center_y), radius
 
+def calc_square(x1, x2, y1, y2):
+    # Calculate the top-left corner and size of the square
+    left = min(x1, x2)
+    top = min(y1, y2)
+    size = min(abs(x1 - x2), abs(y1 - y2))
+    
+    return pg.Rect((left, top), (size, size))
+
+def calc_right_triangle(x1, x2, y1, y2):
+    # Calculate the vertices of the right triangle
+    vertices = [(x1, y1), (x2, y2), (x1, y2)]
+    
+    return vertices
+
+def calc_equilateral_triangle(x1, x2, y1, y2):
+    # Calculate the center of the base
+    base_center_x = (x1 + x2) // 2
+    base_center_y = y2
+    
+    # Calculate the height of the triangle
+    height = math.sqrt(3) / 2 * (x2 - x1)
+    
+    # Calculate the vertices of the equilateral triangle
+    vertices = [(x1, y2), (x2, y2), (base_center_x, base_center_y - height)]
+    
+    return vertices
+
+def calc_rhombus(x1, x2, y1, y2):
+    # Calculate the center of the rhombus
+    center_x = (x1 + x2) // 2
+    center_y = (y1 + y2) // 2
+    
+    # Calculate the vertices of the rhombus
+    vertices = [(center_x, y1), (x2, center_y), (center_x, y2), (x1, center_y)]
+    
+    return vertices
+
+
 def draw_header():
     global eraser, blue, red, green, yellow, black, purple
     rect = pg.draw.rect(screen, (229,255,204), [0, 0, 600, 86]) 
@@ -62,7 +100,7 @@ def draw_header():
 def draw():
     global activecolor, activeshape, mouse, prevx, prevy, currx, curry, LMBPressed
     if mouse[1] > 100:
-        if activeshape == 'rect':
+        if activeshape == 'rectangle':
             if LMBPressed:
                 if activecolor == (255, 255, 255):  # Check if eraser is active
                     pg.draw.rect(screen, (0, 0, 0), calc_rect(prevx, currx, prevy, curry))
@@ -78,8 +116,38 @@ def draw():
                 else:
                     screen.blit(baselayer, (0, 0))
                     pg.draw.circle(screen, activecolor, center, radius, 2)
+        
+        if activeshape == 'square':
+            if LMBPressed:
+                if activecolor == (255, 255, 255):  # Check if eraser is active
+                    pg.draw.rect(screen, (0, 0, 0), calc_square(prevx, currx, prevy, curry))
+                else:
+                    screen.blit(baselayer, (0, 0))
+                    pg.draw.rect(screen, activecolor, calc_square(prevx, currx, prevy, curry), 2)
+        
+        if activeshape == 'right_triangle':
+            if LMBPressed:
+                if activecolor == (255, 255, 255):  # Check if eraser is active
+                    pg.draw.polygon(screen, (0, 0, 0), calc_right_triangle(prevx, currx, prevy, curry))
+                else:
+                    screen.blit(baselayer, (0, 0))
+                    pg.draw.polygon(screen, activecolor, calc_right_triangle(prevx, currx, prevy, curry), 2)
 
+        if activeshape == 'equilateral_triangle':
+            if LMBPressed:
+                if activecolor == (255, 255, 255):  # Check if eraser is active
+                    pg.draw.polygon(screen, (0, 0, 0), calc_equilateral_triangle(prevx, currx, prevy, curry))
+                else:
+                    screen.blit(baselayer, (0, 0))
+                    pg.draw.polygon(screen, activecolor, calc_equilateral_triangle(prevx, currx, prevy, curry), 2)
 
+        if activeshape == 'rhombus':
+            if LMBPressed:
+                if activecolor == (255, 255, 255):  # Check if eraser is active
+                    pg.draw.polygon(screen, (0, 0, 0), calc_rhombus(prevx, currx, prevy, curry))
+                else:
+                    screen.blit(baselayer, (0, 0))
+                    pg.draw.polygon(screen, activecolor, calc_rhombus(prevx, currx, prevy, curry), 2)
 
 while True:
     
@@ -98,11 +166,24 @@ while True:
             currx = event.pos[0]
             curry = event.pos[1]
 
-            if shape_1.collidepoint(mouse):
-                activeshape = 'rect'
+            if rectangle.collidepoint(mouse):
+                activeshape = 'rectangle'
 
-            if shape_2.collidepoint(mouse):
+            if circle.collidepoint(mouse):
                 activeshape = 'circle'
+
+            if square.collidepoint(mouse):
+                activeshape = 'square'
+            
+            if right_triangle.collidepoint(mouse):
+                activeshape = 'right_triangle'
+            
+            if equilateral_triangle.collidepoint(mouse):
+                activeshape = 'equilateral_triangle'
+            
+            if rhombus.collidepoint(mouse):
+                activeshape = 'rhombus'
+
 
             if eraser.collidepoint(mouse):  # Check if eraser is clicked
                 screen.fill((255, 255, 255))
@@ -135,7 +216,11 @@ while True:
     draw_text("Eraser", text_font, (255, 0, 0), 295, 5)
     draw_text("Colors", text_font, (255, 0, 0), 520, 5)
     
-    shape_1 = pg.draw.rect(screen, (0, 0, 0), [20, 30, 50, 50])
-    shape_2 = pg.draw.circle(screen, (0, 0, 0), [135, 55], 30)
+    rectangle = pg.draw.rect(screen, BLACK, [5, 40, 30, 20])
+    circle = pg.draw.circle(screen, BLACK, [55, 45], 15)
+    square = pg.draw.rect(screen, BLACK, [75, 30, 30, 30])
+    right_triangle = pg.draw.polygon(screen, BLACK,[[130,30], [110, 60], [130, 60]])
+    equilateral_triangle = pg.draw.polygon(screen, BLACK, [[160, 30], [140, 60], [180,60]])
+    rhombus = pg.draw.polygon(screen, BLACK, [[210, 25], [230, 45], [210, 65], [190, 45]])
     pg.display.flip()
     clock.tick(fps)
