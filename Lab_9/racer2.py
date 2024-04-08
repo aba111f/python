@@ -20,7 +20,6 @@ WHITE = (255, 255, 255)
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 600
 SPEED = 5
-SCORE = 0
 COINS = 0
 #Setting up Fonts
 font = pygame.font.SysFont("Verdana", 60)
@@ -46,7 +45,6 @@ class Enemy(pygame.sprite.Sprite):
         global SCORE
         self.rect.move_ip(0,SPEED)
         if (self.rect.top > 600):
-            SCORE += 1
             self.rect.top = 0
             self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
 
@@ -60,10 +58,6 @@ class Player(pygame.sprite.Sprite):
        
     def move(self):
         pressed_keys = pygame.key.get_pressed()
-        if pressed_keys[K_UP]:
-            self.rect.move_ip(0, -5)
-        if pressed_keys[K_DOWN]:
-            self.rect.move_ip(0,5)
         
         if self.rect.left > 0:
               if pressed_keys[K_LEFT]:
@@ -76,6 +70,7 @@ class Coin(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load('C:/Users/karat/Рабочий стол/pp2/Lab_8/Resources/Coin.png')
+        self.image = pygame.transform.scale(self.image,(random.randint(20, 80), random.randint(20, 80)))
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
 
@@ -108,6 +103,7 @@ pygame.time.set_timer(INC_SPEED, 1000)
 
 #Game Loop
 while True:
+    
     #Cycles through all events occurring  
     for event in pygame.event.get():
         if event.type == INC_SPEED:
@@ -117,9 +113,7 @@ while True:
             sys.exit()
 
     DISPLAYSURF.blit(background, (0,0))
-    scores = font_small.render(str(SCORE), True, BLACK)
-    DISPLAYSURF.blit(scores, (10,10))
-
+   
     counter = font_small.render(str(COINS), True, BLACK)
     DISPLAYSURF.blit(counter, (370, 10))
 
@@ -155,4 +149,3 @@ while True:
           sys.exit()          
     pygame.display.update()
     FramePerSec.tick(FPS)
-pygame.quit()

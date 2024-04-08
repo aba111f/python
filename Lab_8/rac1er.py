@@ -20,7 +20,6 @@ WHITE = (255, 255, 255)
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 600
 SPEED = 5
-SCORE = 0
 COINS = 0
 #Setting up Fonts
 font = pygame.font.SysFont("Verdana", 60)
@@ -46,7 +45,7 @@ class Enemy(pygame.sprite.Sprite):
         global SCORE
         self.rect.move_ip(0,SPEED)
         if (self.rect.top > 600):
-            SCORE += 1
+            
             self.rect.top = 0
             self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
 
@@ -98,23 +97,18 @@ all_sprites = pygame.sprite.Group()
 all_sprites.add(P1)
 all_sprites.add(E1)
 all_sprites.add(C1)
-#Adding a new User event 
-INC_SPEED = pygame.USEREVENT + 1
-pygame.time.set_timer(INC_SPEED, 1000)
+
 
 #Game Loop
 while True:
     #Cycles through all events occurring  
-    for event in pygame.event.get():
-        if event.type == INC_SPEED:
-              SPEED += 0.25     
+    for event in pygame.event.get():    
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
     DISPLAYSURF.blit(background, (0,0))
-    scores = font_small.render(str(SCORE), True, BLACK)
-    DISPLAYSURF.blit(scores, (10,10))
+    
 
     counter = font_small.render(str(COINS), True, BLACK)
     DISPLAYSURF.blit(counter, (370, 10))
@@ -151,4 +145,3 @@ while True:
           sys.exit()          
     pygame.display.update()
     FramePerSec.tick(FPS)
-pygame.quit()
