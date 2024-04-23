@@ -45,7 +45,6 @@ class Point:
         self.y = y
 
     # Generate random point within the grid
-    @staticmethod
     def generate():
         return Point(randint(0, WIDTH // CELL - 1) * CELL, randint(0, HEIGHT // CELL - 1) * CELL)
 

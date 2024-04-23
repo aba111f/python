@@ -9,8 +9,10 @@ pygame.display.set_caption("Micky Mouse clock")
 
 background = pygame.image.load("C:/Users/karat/Рабочий стол/pp2/Lab_7/images/main-clock.png")
 background = pygame.transform.scale(background, (600, 500))
+
 left = pygame.image.load("C:/Users/karat/Рабочий стол\pp2/Lab_7/images/left-hand.png")
 left = pygame.transform.scale(left, (400, 100))
+
 right = pygame.image.load("C:/Users/karat/Рабочий стол\pp2/Lab_7/images/right-hand.png")
 right = pygame.transform.scale(right, (300, 100))
 
@@ -39,6 +41,7 @@ while True:
 
     left_rect = rotate_left.get_rect(center=(300, 250)) 
     right_rect = rotate_right.get_rect(center=(300, 250))
+    
     screen.blit(rotate_left, left_rect.topleft)
     screen.blit(rotate_right, right_rect.topleft)
 
