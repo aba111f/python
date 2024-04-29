@@ -41,3 +41,5 @@ if __name__ == '__main__':
     # insert_or_update_user('Someguy','+434238525')
     delete_user(username, phone)
 
+cur.close()
+conn.close()

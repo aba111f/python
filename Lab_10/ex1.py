@@ -1,10 +1,10 @@
 import psycopg2
 import csv
 
-# Connect to your postgres DB
+
 conn = psycopg2.connect("dbname=PhoneBook user=postgres password=z9h8i7b6")
 
-# Open a cursor to perform database operations
+
 cur = conn.cursor()
 
 # Create table
@@ -17,15 +17,15 @@ CREATE TABLE IF NOT EXISTS PhoneBook (
 conn.commit()
 
 # Insert data from CSV file
-with open('data.csv', 'r') as f:
-    reader = csv.reader(f)
-    next(reader)  # Skip the header row
-    for row in reader:
-        cur.execute(
-            "INSERT INTO PhoneBook VALUES (%s, %s)",
-            row
-        )
-conn.commit()
+# with open('data.csv', 'r') as f:
+#     reader = csv.reader(f)
+#     next(reader)  # Skip the header row
+#     for row in reader:
+#         cur.execute(
+#             "INSERT INTO PhoneBook VALUES (%s, %s)",
+#             row
+#         )
+# conn.commit()
 
 # Insert data from console
 # run = True
@@ -38,8 +38,10 @@ conn.commit()
 #     )
 #     conn.commit()
 #     run = False
+
+
 # Query data
-# cur.execute("SELECT * FROM PhoneBook WHERE username like 'A%'")
+# cur.execute("SELECT * FROM PhoneBook WHERE username like 'a%'")
 # rows = cur.fetchall()
 # for row in rows:
 #     print(row)
